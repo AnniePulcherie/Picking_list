@@ -1,4 +1,31 @@
 .ligne{
     cursor: pointer;
   }
-  
+
+  .error{
+    background-color: rgb(211, 93, 93);
+  }
+
+  .alert-success {
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+    display: inline-block;
+    border-color: #28a745;
+    background-color: #d4edda;
+    color: #28a745;
+  }
+
+  .alert-failed {
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+    display: inline-block;
+    border-color: #dc3545;
+    background-color: #f8d7da;
+    color: #dc3545;
+  }
+
+  .page{
+    background-color: rgb(99, 166, 242);
+  }

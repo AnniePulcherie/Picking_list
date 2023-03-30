@@ -1,31 +1,10 @@
+window.addEventListener("DOMContentLoaded",()=>{
+    const barcode = document.getElementById('barcode');
+    console.log(barcode);
+    console.log(barcode.textContent);
 
-
-
-
-document.addEventListener("DOMContentLoaded",()=>{
-    
-    const rows = document.querySelectorAll("tr[data-href]");
-    rows.forEach(row =>{
-        row.addEventListener("click", ()=>{
-          if (window.confirm("Start to picking")) {
-            // Code à exécuter si l'utilisateur clique sur le bouton "OK"
-            window.location.href = row.dataset.href;
-          } else {
-            // Code à exécuter si l'utilisateur clique sur le bouton "Annuler"
-            return;
-          }
-           
-        });
-    })
+    barcode.addEventListener("input", myEvent);
 });
-
-const barcode = document.getElementById('barcode');
-console.log(barcode);
-console.log(barcode.textContent);
-
-const itemInput = document.querySelector("input[type=text]");
-
-itemInput.addEventListener("blur", myEvent);
 
 function myEvent(e) {
   console.log(e.target.value);
@@ -36,14 +15,52 @@ function myEvent(e) {
   }
 }
 
-function produitCode() {
-  var valeur = prompt("Entrez une valeur :");
-  console.log(valeur);
-}
+window.addEventListener("DOMContentLoaded",()=>{
+    
+  Livewire.on('show-modal', function ($order_id) {
+    
+     $('#exampleModal').modal('show');
+  });
+});
 
-const amount = {$item};
-if(amount >1){
-  for(i=2;i<=amount;i++){
-    prompt("Ajouter du produit","ok");
-  }
-}
+
+window.addEventListener("DOMContentLoaded",()=>{
+    
+  Livewire.on('item', function ($item) {
+    
+     $('#itemModal').modal('show');
+  });
+
+
+  Livewire.on('closeModal', function () {
+    $('#exampleModal').modal('hide');
+  });
+});
+
+window.addEventListener("DOMContentLoaded",()=>{
+    
+  Livewire.on('closeModal', function () {
+    $('#itemModal').modal('hide');
+  });
+});
+
+window.addEventListener("DOMContentLoaded",()=>{
+    
+  Livewire.on('closeModal', function () {
+    $('#exampleModal').modal('hide');
+  });
+});
+
+window.addEventListener("DOMContentLoaded",()=>{
+    
+  Livewire.on('showMessage', function (message) {
+    const alert = document.getElementById('alert');
+    alert.innerHTML = message;
+    setTimeout(() => {
+        alert.remove();
+    }, 7000);
+    });
+});
+
+  
+

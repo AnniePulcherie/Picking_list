@@ -1,8 +1,10 @@
 <?php
 
+use App\Http\Livewire\LoginPage;
 use App\Http\Livewire\OrdersTable;
 use App\Http\Livewire\ProduitTable;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ProductTable;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,12 +17,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/orders', OrdersTable::class);
+Route::get('/', LoginPage::class);
 
-Route::get('/detail/{id}', ProduitTable::class)->name('detail');
-
-// Route::get('/produit/{id}', [OrdersTable::class,'selectOrders'])->name('produit');
+Route::get('/produit/{id}',ProduitTable::class)->name('produit');
+//Route::get('/produit/{id}', [ProductTable::class,'index'])->name('produit');
 // Route::get('produit/{id}', [OrderController::class,'index'])->name('orders');
 // Route::post('barcode?[id={id}]', [OrderController::class,'postBarcode'])->name('barcode');
