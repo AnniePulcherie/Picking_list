@@ -48,22 +48,24 @@
                                     <th scope="col">Product code</th>
                                     <th scope="col">Items</th>
                                     <th scope="col">Position</th>
-                                    <th scope="col">Status</th>
+                                    
                                     <th scope="col">Action</th>
                                 </tr>
                             </thead>
+                           
                             <tbody>
+
                                 @if(!empty($listProduits))
                                     @foreach($listProduits as $produit) 
                                     <tr >
                                         
                                         <th scope="row clickable">{{$numero++}}</th>
-                                        <td>{{$produit->name}}</td>
-                                        <td>{{$produit->product_code}}</td>
+                                        <td>{{(string)$produit->name}}</td>
+                                        <td>{{(string)$produit->product_code}}</td>
                                         <td>{{$produit->amount}}</td>
                                         <td>{{$produit->position}}</td>
-                                        <td>{{$produit->Status}}</td>
-                                        <td><button type="button"  wire:click ="picking('{{$produit->product_code}}')"><i class='bx bx-check-circle'></i></button></td>
+                                        
+                                        <td><button type="button"  wire:click ="picking('{{$produit->product_code}}')" ><i class='bx bx-check-circle'></i></button></td>
                                     </tr>
                                     @endforeach 
                                 @endif
@@ -81,9 +83,15 @@
         <ul class="pagination">
             @if($nbProduitArray>$nbElementParPage)
             <?php for($i=1;$i<=$nbPage; $i++){
-                
-                echo "<li class='page-item'><a class='page-link' href='?page=$i'>$i</a></li>";
-            }?>
+                    if ($i == $current_page) {
+                        echo '<li class="page-item active">';
+                    }
+                    else {
+                    echo '<li class="page-item">';
+                    }
+                   echo "<a class='page-link' href='?page=$i'>$i</a></li>";
+                }?>
+    
             @endif
         </ul>
     </nav>

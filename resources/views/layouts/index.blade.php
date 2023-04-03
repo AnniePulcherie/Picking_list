@@ -11,7 +11,7 @@
 
   <!-- Favicons -->
   <link href={{asset("assets/img/cscart-logo.png")}} rel="icon">
-  <link href={{asset("assets/img/apple-touch-icon.png")}} rel="apple-touch-icon">
+  {{-- <link href={{asset("assets/img/apple-touch-icon.png")}} rel="apple-touch-icon"> --}}
 
   <!-- Google Fonts -->
   <link href="https://fonts.gstatic.com" rel="preconnect">
@@ -21,9 +21,6 @@
   <link href={{asset("assets/vendor/bootstrap/css/bootstrap.min.css")}} rel="stylesheet">
   <link href={{asset("assets/vendor/bootstrap-icons/bootstrap-icons.css")}} rel="stylesheet">
   <link href={{asset("assets/vendor/boxicons/css/boxicons.min.css")}} rel="stylesheet">
-  <link href={{asset("assets/vendor/quill/quill.snow.css")}} rel="stylesheet">
-  <link href={{asset("assets/vendor/quill/quill.bubble.css")}} rel="stylesheet">
-  <link href={{asset("assets/vendor/remixicon/remixicon.css")}} rel="stylesheet">
   <link href={{asset("assets/vendor/simple-datatables/style.css")}} rel="stylesheet">
 
   <link href={{asset("css/style.css")}} rel="stylesheet">
@@ -97,7 +94,7 @@
             </li>
 
             <li>
-              <a class="dropdown-item d-flex align-items-center" href="#">
+              <a class="dropdown-item d-flex align-items-center" href="/">
                 <i class="bi bi-box-arrow-right"></i>
                 <span>Sign Out</span>
               </a>
@@ -122,23 +119,14 @@
           <span>Dashboard</span>
         </a>
       </li>
-      
-      <li class="nav-item">
-        <a class="nav-link " href="/product"> 
-          {{-- MILA SOLONA ROUTE TY --}}
-          <i class="bi bi-grid"></i> 
-          {{-- MBOLA SOLOANA i  --}}
-          <span>Product</span>
-        </a>
-      
      
       
       <li class="nav-heading">Pages</li>
 
       <li class="nav-item">
-        <a class="nav-link collapsed" href="/profile">
-          <i class="bi bi-person"></i>
-          <span>Profile</span>
+        <a class="nav-link collapsed" href="/liste-profile">
+          <i class="bi bi-box"></i>
+          <span>Product</span>
         </a>
       </li><!-- End Profile Page Nav -->
 
@@ -157,7 +145,7 @@
       </li><!-- End Contact Page Nav -->
 
       <li class="nav-item">
-        <a class="nav-link collapsed" href="/logOut">
+        <a class="nav-link collapsed" href="/">
           <i class="bi bi-box-arrow-right"></i>
           <span>Log Out</span>
         </a>
@@ -197,19 +185,19 @@
     </div>
     <div class="credits">
      
-      Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
+      Designed by <a href="#">PickingMade</a>
     </div>
   </footer><!-- End Footer -->
 
   <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 
   <!-- Vendor JS Files -->
-  <script src={{asset("assets/vendor/apexcharts/apexcharts.min.js")}}></script> 
-  <script src={{asset("assets/vendor/bootstrap/js/bootstrap.bundle.min.js")}}></script>
-  <script src={{asset("assets/vendor/chart.js/chart.umd.js")}}></script>
-  <script src={{asset("assets/vendor/echarts/echarts.min.js")}}></script>
-  <script src={{asset("assets/vendor/quill/quill.min.js")}}></script>
-  <script src={{asset("assets/vendor/tinymce/tinymce.min.js")}}></script>
+  {{-- <script src={{asset("assets/vendor/apexcharts/apexcharts.min.js")}}></script>  --}}
+  {{-- <script src={{asset("assets/vendor/bootstrap/js/bootstrap.bundle.min.js")}}></script> --}}
+  {{-- <script src={{asset("assets/vendor/chart.js/chart.umd.js")}}></script> --}}
+  {{-- <script src={{asset("assets/vendor/echarts/echarts.min.js")}}></script> --}}
+  {{-- <script src={{asset("assets/vendor/quill/quill.min.js")}}></script>
+  <script src={{asset("assets/vendor/tinymce/tinymce.min.js")}}></script> --}}
  
   <!-- Template Main JS File -->
   <script src={{asset("js/main.js")}}></script>

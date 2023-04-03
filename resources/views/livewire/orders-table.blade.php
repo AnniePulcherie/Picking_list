@@ -35,19 +35,35 @@
         <!-- Revenue Card -->
         <div class="col-xxl-4 col-md-6">
             <div class="card info-card revenue-card">
-            <div class="card-body">
-                <h5 class="card-title">Produit commander</h5>
+                <div class="card-body">
+                    <h5 class="card-title">Produit commander</h5>
 
-                <div class="d-flex align-items-center">
-                <div class="ps-3">
-                    <h6>{{$nbP}}</h6>
-                    
+                    <div class="d-flex align-items-center">
+                    <div class="ps-3">
+                        <h6>{{$nbP}}</h6>
+                        
+                    </div>
+                    </div>
                 </div>
-                </div>
-            </div>
 
             </div>
         </div><!-- End Revenue Card -->
+
+        <div class="col-xxl-4 col-md-6">
+            <div class="card info-card revenue-card">
+                <div class="card-body">
+                    <h5 class="card-title">Product picked</h5>
+
+                    <div class="d-flex align-items-center">
+                    <div class="ps-3">
+                        <h6>{{$nbProduitPicked}}</h6>
+                        
+                    </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
     </div>
 
     <section class="section">
@@ -94,10 +110,14 @@
 
     <nav aria-label="Page navigation example">
         <ul class="pagination">
-            
-                <?php for($i=1;$i<=$nbPage; $i++){
-        
-                   echo "<li class='page-item'><a class='page-link' href='?page=$i'>$i</a></li>";
+              <?php for($i=1;$i<=$nbPage; $i++){
+                    if ($i == $current_page) {
+                        echo '<li class="page-item active">';
+                    }
+                    else {
+                    echo '<li class="page-item">';
+                    }
+                   echo "<a class='page-link' href='?page=$i'>$i</a></li>";
                 }?>
            
         </ul>
@@ -130,21 +150,6 @@
     </div>
     </div>
  
-<script>
-//     window.addEventListener("DOMContentLoaded",()=>{
-    
-//     Livewire.on('show-modal', function ($order_id) {
-     
-//        $('#exampleModal').modal('show');
-//     });
 
-// });
-</script>
 </div>
-
-
-
-{{-- <div>
-    @livewire('prelevements')
-</div> --}}
 

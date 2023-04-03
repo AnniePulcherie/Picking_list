@@ -17,10 +17,18 @@ use App\Http\Controllers\ProductTable;
 |
 */
 
-Route::get('/orders', OrdersTable::class);
+Route::get('/orders', OrdersTable::class)->name('orders');
 Route::get('/', LoginPage::class);
-
+Route::get('/produit',ProduitTable::class)->name('liste-produit');
 Route::get('/produit/{id}',ProduitTable::class)->name('produit');
-//Route::get('/produit/{id}', [ProductTable::class,'index'])->name('produit');
-// Route::get('produit/{id}', [OrderController::class,'index'])->name('orders');
-// Route::post('barcode?[id={id}]', [OrderController::class,'postBarcode'])->name('barcode');
+Route::get('/template', function () {
+    return view('template');
+});
+
+Route::get('/teste', function () {
+    return view('test');
+});
+
+Route::get('/show', function () {
+    return view('show');
+});

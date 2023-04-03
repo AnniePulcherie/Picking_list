@@ -28,6 +28,8 @@ class ProduitTable extends Component
     public $nbPage;
     public $debutPage;
     public $styleMessage;
+    public $current_page;
+    
 
     public function mount(Request $req){
         $this->order_id = $req->id;
@@ -54,12 +56,9 @@ class ProduitTable extends Component
         $this->nbElementParPage = 7;
         $this->nbProduitArray = $this->arrayNbProduit[0]['produitAmount'];
 
-        // for($i=1;$i<=$this->nbProduitArray;$i++){
-        //     $this->numero = $i;
-        // }
-
         $this->nbPage = ceil($this->nbProduitArray/$this->nbElementParPage);
         $this->debutPage = ($this->page-1)*$this->nbElementParPage;
+        $this->current_page = isset($_GET['page']) ? $_GET['page'] : 1;
     }
         
     
@@ -79,20 +78,19 @@ class ProduitTable extends Component
         $this->reset('amount');
     }
 
-//LOGIN MILA ATAO ANNIE
-//PROFILE KOA
 
     public function picking($code){
         DB::update("UPDATE cscart_order_details 
-        SET `Status`= 'picked' 
+        SET `statusOrders`= 'picked' 
         WHERE product_code = '$code' 
         AND order_id = $this->order_id");
         $this->styleMessage ='alert-success';
         $this->message = "picked succefull";
         $this->showMessage($this->message);
-        
-        //return redirect()->back();
+       
     }
+
+   
    
     public function submit(){
        
@@ -104,7 +102,7 @@ class ProduitTable extends Component
             FROM `cscart_order_details`  
             WHERE order_id = $this->order_id 
             and product_code = '$code_product' 
-            and `Status` IS NULL");
+            and `statusOrders` IS NULL");
             
             if(!empty($this->produit)){
                 $this->listProduct = json_decode(json_encode($this->produit), true);
@@ -112,14 +110,16 @@ class ProduitTable extends Component
                 $this->product_id = $this->listProduct[0]['product_id'];
                 
                 if($this->amount == $this->item ){
-                    DB::update("UPDATE cscart_order_details SET `Status`= 'picked' WHERE product_id = $this->product_id AND order_id = $this->order_id");
+                    DB::update("UPDATE cscart_order_details SET `statusOrders`= 'picked' WHERE product_id = $this->product_id AND order_id = $this->order_id");
                     $this->message = "picked succefull";
                     $this->styleMessage = 'alert-success';
                     $this->showMessage($this->message);
                     $this->reinitialiserBarcode();
-                    return redirect()->back();
+                    $this->flag = 1; 
+                    
+                    //return redirect()->back();
                 }else{
-                    $this->message = "verifier le nombre de produit";
+                    $this->message = "Failed, Verify the number of product ";
                     $this->styleMessage = 'alert-failed';
                     $this->showMessage($this->message);
                     $this->reinitialiserBarcode();
@@ -130,6 +130,7 @@ class ProduitTable extends Component
                 $this->message = "Failed, Verify the product code";
                 $this->showMessage($this->message);
                 $this->reinitialiserBarcode();
+
                 //return redirect()->back();
             }
         }catch(Exception $e){
@@ -141,21 +142,21 @@ class ProduitTable extends Component
     }
 
     public function finished(){
-        return redirect('/');
+        return redirect('/orders');
     }
     public function render()
     {
        $this->variable();
        $this->listProduits = DB::select("SELECT *,
        (SELECT product 
-       FROM `cscart_product_descriptions` 
+       FROM `cscart_product_descriptions`  
        where product_id = d.product_id )as name,
             (SELECT localization 
                 FROM `cscart_products` 
                 where product_id = d.product_id 
             )as position 
         FROM `cscart_order_details` d 
-        WHERE order_id = $this->order_id 
+        WHERE d.statusOrders IS NULL AND order_id = $this->order_id 
         limit $this->debutPage,$this->nbElementParPage");
     
        return view('livewire.produit-table',[

@@ -14,7 +14,7 @@ class OrdersTable extends Component
     public $message;
     public $orders;
     public $selectedOrders;
-
+  
     public $nombreCommande;
     public $arrayNbCommande;
     public $page;
@@ -24,12 +24,36 @@ class OrdersTable extends Component
     public $idOrder;
     public $ordersAmount;
     public $productAmount;
-    
+    public $current_page;
+    public $produitPicked;
+    public $arrayProduitPicked;
+    public $nbProduitPicked;
 
     protected $listeners = [
         'openModal' => 'openModal',
     ];
     // CREER UN COLONNE STATUS S'IL N'EXISTE PAS (AJOUTER UNE COLONNE STATUS A PARTIR D UNE MIGRATION)
+   
+    public function mount(){
+        $table_info = DB::select("DESCRIBE cscart_order_details");
+
+        $column_exists = false;
+
+        // Vérifier si la colonne existe déjà
+        foreach ($table_info as $column) {
+            if ($column->Field == 'statusOrders') {
+                $column_exists = true;
+                break;
+            }
+        }
+
+        if (!$column_exists) {
+            DB::statement("ALTER TABLE cscart_order_details
+            ADD COLUMN `statusOrders` VARCHAR(255) NULL;");
+        }
+    }
+   
+   
     public function sqlRequte()
     {
         //$this->nombreCommande = DB::select('select count(order_id) as commande from cscart_orders');
@@ -39,7 +63,7 @@ class OrdersTable extends Component
             SELECT *
             FROM cscart_order_details
             WHERE o.order_id = cscart_order_details.order_id
-            AND cscart_order_details.Status IS NULL
+            AND cscart_order_details.statusOrders IS NULL
         )");
 
             $this->productAmount = DB::select("SELECT count(*) as nbp 
@@ -48,9 +72,17 @@ class OrdersTable extends Component
                 SELECT *
                 FROM cscart_order_details
                 WHERE o.order_id = cscart_order_details.order_id
-                AND cscart_order_details.Status IS NULL
+                AND cscart_order_details.statusOrders IS NULL
             ) AND p.product_id = o.product_id ");
 
+        
+        $this->produitPicked = DB::select("SELECT count(*) as produitPicked
+        FROM `cscart_order_details` 
+        WHERE statusOrders = 'picked'
+        ");
+
+        $this->arrayProduitPicked = json_decode(json_encode($this->produitPicked), true);
+        $this->nbProduitPicked = $this->arrayProduitPicked[0]['produitPicked'];
         $this->arrayNbCommande = json_decode(json_encode($this->ordersAmount), true);
         @$this->page = $_GET["page"];
         if(empty($this->page)) $this->page = 1;
@@ -58,8 +90,13 @@ class OrdersTable extends Component
         $this->nbElementParPage = 8;
         $this->nbPage = ceil($this->arrayNbCommande[0]['nbc']/$this->nbElementParPage);
         $this->debutPage = ($this->page-1)*$this->nbElementParPage;
+        $this->current_page = isset($_GET['page']) ? $_GET['page'] : 1;
+
+
 
     }
+
+   
 
     public function showModal(int $order_id)
     {
@@ -99,7 +136,7 @@ class OrdersTable extends Component
             SELECT *
             FROM cscart_order_details
             WHERE o.order_id = cscart_order_details.order_id
-            AND cscart_order_details.Status IS NULL
+            AND cscart_order_details.statusOrders IS NULL
         ) AND o.firstname LIKE '%$this->search%' limit $this->debutPage,$this->nbElementParPage");
        
     }
